@@ -108,7 +108,12 @@ tolerations: []
 affinity: {}
 
 nginx:
-  upstreams:
+  upstreams_9000:
+    - "server 192.168.2.249:9000;"
+    - "server 192.168.2.250:9000;"
+    - "server 192.168.2.251:9000;"
+    - "server 192.168.2.252:9000;"
+  upstreams_9001:
     - "server 192.168.2.249:9001;"
     - "server 192.168.2.250:9001;"
     - "server 192.168.2.251:9001;"
