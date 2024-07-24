@@ -30,9 +30,17 @@ spec:
               containerPort: 80
               protocol: TCP
           livenessProbe:
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
           readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

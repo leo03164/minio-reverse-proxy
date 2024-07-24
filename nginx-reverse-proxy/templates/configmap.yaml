@@ -28,16 +28,30 @@ data:
       server_name minio-web-cluster.lbjt;
 
       location / {
-        proxy_pass http://backend;
+        proxy_pass http://backend_9001;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
       }
+
+      location /healthz {
+        access_log off;
+        return 200 'OK';
+        add_header Content-Type text/plain;
+      }
     }
 
-    upstream backend {
-      {{- range .Values.nginx.upstreams }}
-      {{ . }}
-      {{- end }}
+    upstream backend_9000 {
+      server 192.168.2.249:9000;
+      server 192.168.2.250:9000;
+      server 192.168.2.251:9000;
+      server 192.168.2.252:9000;
+    }
+
+    upstream backend_9001 {
+      server 192.168.2.249:9001;
+      server 192.168.2.250:9001;
+      server 192.168.2.251:9001;
+      server 192.168.2.252:9001;
     }
